@@ -13,7 +13,9 @@ public class PlayerMain : MonoBehaviour
 
     #region references
 
-    private PlayerMovement playerMovement;
+    public Rigidbody2D body;
+
+    public PlayerMovement playerMovement;
 
     private ShootingComponent playerBlaster;
 
@@ -23,15 +25,17 @@ public class PlayerMain : MonoBehaviour
 
     private bool boostEnabled = true;
 
-    private Vector3 facingDirection;
+    private Vector2 facingDirection;
 
     private bool canShoot = true;
+
+    private bool isBoosting = false;
 
     #endregion
 
     #region methods
 
-    public void SetFacingDirection(Vector3 direction)
+    public void SetFacingDirection(Vector2 direction)
     {
         facingDirection = direction.normalized;
     }
@@ -52,6 +56,17 @@ public class PlayerMain : MonoBehaviour
         playerBlaster.Shoot(facingDirection);
     }
 
+    public void SetIsBoosting(bool value)
+    {
+        if (!boostEnabled) return;
+        isBoosting = value;
+    }
+
+    public bool IsBoosting()
+    {
+        return isBoosting;
+    }
+
     public bool CanShoot()
     {
         return canShoot;
@@ -60,6 +75,8 @@ public class PlayerMain : MonoBehaviour
     #endregion
     void Start()
     {
+        body = GetComponent<Rigidbody2D>();
+
         playerMovement = GetComponent<PlayerMovement>();
 
         playerBlaster = GetComponent<ShootingComponent>();
@@ -67,6 +84,6 @@ public class PlayerMain : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 }

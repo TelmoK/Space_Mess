@@ -15,7 +15,7 @@ public class ShootingComponent : MonoBehaviour
 
     #region methods
 
-    public void Shoot(Vector3 proyectileDirection)
+    public void Shoot(Vector2 proyectileDirection)
     {
         GameObject proyectile = Instantiate(proyectilePrefab, _myTransform.position, Quaternion.identity);
         proyectile.GetComponent<ProyectileMovement>().SetupDirection(proyectileDirection);

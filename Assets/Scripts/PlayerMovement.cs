@@ -24,16 +24,16 @@ public class PlayerMovement : MonoBehaviour
 
     #region properties
 
-    private Vector3 speed;
+    private Vector2 speed;
 
     #endregion
 
     #region methods
 
-    public void Boost(Vector3 movementDirection)
+    public void Boost(Vector2 movementDirection)
     {
         float angleOfChange = (float)Math.Acos(Vector2.Dot(speed.normalized, movementDirection.normalized));
-
+        
         if (angleOfChange <= 0.5)
         {
             speed += movementDirection.normalized * boostSpeed;
@@ -45,21 +45,17 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            speed += movementDirection.normalized * boostSpeed * 2;
+            speed += movementDirection.normalized * boostSpeed * 1.5f;
         }
     }
-    public void AddSpeed(Vector3 _speed)
+    public void AddSpeed(Vector2 _speed)
     {
         speed += _speed;
     }
 
-    public void SetSpeed(Vector3 _speed)
-    {
-        speed = _speed;
-    }
     public void ScaleSpeed(float scale)
     {
-        speed = speed.normalized * scale;
+        speed = speed.normalized * scale; playerBody.velocity = speed;
     }
 
     #endregion
@@ -71,10 +67,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        speed = new Vector3(speed.x, speed.y, 0);// set the z to 0 to avoid problems
-
         if (speed.magnitude > maxSpeed) speed = speed.normalized * maxSpeed;
 
-        if(playerBody != null) playerBody.velocity = speed;Debug.Log("Speed Module: " + playerBody.velocity.magnitude);
+        if (playerBody != null) playerBody.velocity = speed;
     }
 }

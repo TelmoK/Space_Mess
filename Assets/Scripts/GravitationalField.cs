@@ -36,41 +36,46 @@ public class GravitationalField : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.gameObject.GetComponent<PlayerMain>() != null)
-        {
-            Rigidbody2D body = collision.gameObject.GetComponent<Rigidbody2D>();
-            PlayerMovement bodyMovement = collision.gameObject.GetComponent<PlayerMovement>();
+        PlayerMain player = collision.gameObject.GetComponent<PlayerMain>();
 
-            Vector3 distanceVec = body.transform.position - _myTransfrom.position;
-            float dot = Vector3.Dot(body.velocity, distanceVec);
+        if (player == null) return;
+        
+        Vector2 distanceVec = player.body.transform.position - _myTransfrom.position;
             
-            // Enters in orbit when movement is more or less tangent
-            if (Math.Abs(dot) <= orbitalEntranceErrorMargin)
-                isInOrbit = true;
-
-            if (isInOrbit)
-            {
-                if (gravityIncreaseCount == 0 && initialLinearSpeed > 0) bodyMovement.ScaleSpeed(initialLinearSpeed);
-                
-                Vector2 g_u = -distanceVec.normalized; // Unitary gravity vector
-
-                float scalar = (-body.velocity.x * g_u.x - body.velocity.y * g_u.y) / (float)(Math.Pow(g_u.x, 2) + Math.Pow(g_u.y, 2));
-                scalar += gravityIncreaseCount;
-
-                bodyMovement.AddSpeed(g_u * scalar); // Keeps speed tangent to g_u
-                
-                gravityIncreaseCount += gravityIncreaseIndex;
-            }
+        // Enters in orbit when movement is more or less tangent
+        if (Math.Abs(Vector2.Dot(player.body.velocity, distanceVec)) <= orbitalEntranceErrorMargin)
+        {
+            isInOrbit = true;
         }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if(collision.gameObject.GetComponent<PlayerMain>() != null)
+        if (player.IsBoosting())
         {
             gravityIncreaseCount = 0;
             isInOrbit = false;
         }
+
+        if (isInOrbit && !player.IsBoosting())
+        {
+            if (gravityIncreaseCount == 0 && initialLinearSpeed > 0) player.playerMovement.ScaleSpeed(initialLinearSpeed);
+                
+            Vector2 g_u = -distanceVec.normalized; // Unitary gravity vector
+
+            float scalar = (-player.body.velocity.x * g_u.x - player.body.velocity.y * g_u.y) / (float)(Math.Pow(g_u.x, 2) + Math.Pow(g_u.y, 2));
+            scalar += gravityIncreaseCount;
+
+            player.playerMovement.AddSpeed(g_u * scalar); // Keeps speed tangent to g_u
+            
+            gravityIncreaseCount += gravityIncreaseIndex;
+        }
+        
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<PlayerMain>() != null) return;
+        
+        gravityIncreaseCount = 0;
+        isInOrbit = false;
     }
 
     #endregion

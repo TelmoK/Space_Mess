@@ -6,7 +6,7 @@ public class ProyectileMovement : MonoBehaviour
 {
     #region parameters
 
-    private float proyectileSpeed = 30;
+    private float proyectileSpeed = 30f;
 
     #endregion
 
@@ -18,13 +18,13 @@ public class ProyectileMovement : MonoBehaviour
 
     #region properties
 
-    Vector3 movementDirection;
+    Vector2 movementDirection;
 
     #endregion
 
     #region methods
 
-    public void SetupDirection(Vector3 direction)
+    public void SetupDirection(Vector2 direction)
     {
         movementDirection = direction.normalized;
     }
@@ -38,6 +38,6 @@ public class ProyectileMovement : MonoBehaviour
 
     void Update()
     {
-        body.velocity = movementDirection * proyectileSpeed;Debug.Log("Bullet Speed: " + body.velocity.magnitude);
+        body.velocity = movementDirection * proyectileSpeed;
     }
 }
