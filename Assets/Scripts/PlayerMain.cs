@@ -7,14 +7,16 @@ public class PlayerMain : MonoBehaviour
     #region parameters
 
     [SerializeField]
-    private int energyUnits;
+    private int fuelUnits = 5;
 
     #endregion
 
     #region references
 
+    [HideInInspector]
     public Rigidbody2D body;
 
+    [HideInInspector]
     public PlayerMovement playerMovement;
 
     private ShootingComponent playerBlaster;
@@ -31,6 +33,8 @@ public class PlayerMain : MonoBehaviour
 
     private bool isBoosting = false;
 
+    private bool isInOrbit = false;
+
     #endregion
 
     #region methods
@@ -44,6 +48,12 @@ public class PlayerMain : MonoBehaviour
     {
         if (playerMovement == null) return;
 
+        if (isInOrbit == true)
+        {
+            SetIsInOrbit(false);
+            return;
+        }
+
         if (boostEnabled == false) return;
         playerMovement.Boost(facingDirection);
     }
@@ -54,12 +64,8 @@ public class PlayerMain : MonoBehaviour
 
         if (canShoot == false) return;
         playerBlaster.Shoot(facingDirection);
-    }
 
-    public void SetIsBoosting(bool value)
-    {
-        if (!boostEnabled) return;
-        isBoosting = value;
+        playerMovement.AddSpeed(facingDirection * -playerMovement.BoostSpeed() * 0.03f);
     }
 
     public bool IsBoosting()
@@ -67,9 +73,36 @@ public class PlayerMain : MonoBehaviour
         return isBoosting;
     }
 
+    public void SetBoostEnabled(bool value)
+    {
+        boostEnabled = value;
+    }
+
     public bool CanShoot()
     {
         return canShoot;
+    }
+
+    public void AddFuelUnit()
+    {
+        fuelUnits++;
+    }
+
+    public void ConsumeFuelUnit()
+    {
+        if (fuelUnits == 0) return;
+        
+        fuelUnits--;
+    }
+
+    public bool IsInOrbit()
+    {
+        return isInOrbit;
+    }
+
+    public void SetIsInOrbit(bool value)
+    {
+        isInOrbit = value;
     }
 
     #endregion
@@ -81,9 +114,9 @@ public class PlayerMain : MonoBehaviour
 
         playerBlaster = GetComponent<ShootingComponent>();
     }
-
+    
     void Update()
     {
-
+        boostEnabled = (fuelUnits > 0) && isInOrbit == false;
     }
 }

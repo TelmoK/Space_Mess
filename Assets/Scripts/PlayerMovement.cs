@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     #region references
 
-    private Rigidbody2D playerBody;
+    private PlayerMain playerMain;
 
     #endregion
 
@@ -47,7 +47,15 @@ public class PlayerMovement : MonoBehaviour
         {
             speed += movementDirection.normalized * boostSpeed * 1.5f;
         }
+
+        playerMain.ConsumeFuelUnit();
     }
+
+    public void SetSpeed(Vector2 _speed)
+    {
+        speed = _speed;
+    }
+
     public void AddSpeed(Vector2 _speed)
     {
         speed += _speed;
@@ -55,20 +63,24 @@ public class PlayerMovement : MonoBehaviour
 
     public void ScaleSpeed(float scale)
     {
-        speed = speed.normalized * scale; playerBody.velocity = speed;
+        speed = speed.normalized * scale; playerMain.body.velocity = speed;
+    }
+    public float BoostSpeed()
+    {
+        return boostSpeed;
     }
 
     #endregion
 
     void Start()
     {
-        playerBody = GetComponent<Rigidbody2D>();
+        playerMain = GetComponent<PlayerMain>();
     }
 
     void Update()
     {
         if (speed.magnitude > maxSpeed) speed = speed.normalized * maxSpeed;
 
-        if (playerBody != null) playerBody.velocity = speed;
+        if (playerMain.body != null) playerMain.body.velocity = speed;
     }
 }

@@ -29,6 +29,13 @@ public class ProyectileMovement : MonoBehaviour
         movementDirection = direction.normalized;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<MonsterMain>() == null) return;
+
+        Destroy(gameObject);
+    }
+
     #endregion
 
     void Start()

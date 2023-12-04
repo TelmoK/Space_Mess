@@ -24,9 +24,6 @@ public class InputManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.A)) player.BoostQuery();
 
-            if (Input.GetKey(KeyCode.A)) player.SetIsBoosting(true);
-            else player.SetIsBoosting(false);
-
             if (Input.GetMouseButtonDown(0)) player.ShootQuery();
             
             player.SetFacingDirection((Vector2)(Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position));
