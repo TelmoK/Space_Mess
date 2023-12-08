@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,31 +8,41 @@ public class PlayerMain : MonoBehaviour
     #region parameters
 
     [SerializeField]
-    private int fuelUnits = 5;
+    private int energyUnits = 20;
 
     #endregion
 
     #region references
 
     [HideInInspector]
-    public Rigidbody2D body;
+    public Rigidbody2D _body;
 
     [HideInInspector]
-    public PlayerMovement playerMovement;
+    public PlayerMovement _playerMovement;
 
     private ShootingComponent playerBlaster;
+
+    private CameraAnimatorControl cameraAnimator;
 
     #endregion
 
     #region properties
 
-    private bool boostEnabled = true;
+    public Rigidbody2D body
+    {
+        get { return _body; }
+    }
+
+    public PlayerMovement playerMovement
+    {
+        get { return _playerMovement; }
+    }
 
     private Vector2 facingDirection;
 
-    private bool canShoot = true;
+    private bool boostEnabled = true;
 
-    private bool isBoosting = false;
+    private bool canShoot = true;
 
     private bool isInOrbit = false;
 
@@ -55,6 +66,7 @@ public class PlayerMain : MonoBehaviour
         }
 
         if (boostEnabled == false) return;
+
         playerMovement.Boost(facingDirection);
     }
 
@@ -63,19 +75,14 @@ public class PlayerMain : MonoBehaviour
         if (playerBlaster == null) return;
 
         if (canShoot == false) return;
+
         playerBlaster.Shoot(facingDirection);
 
+        ConsumeEnergyUnits(1);
+
+        cameraAnimator.SetCameraState(CameraAnimatorControl.CamState.ShootShake);
+
         playerMovement.AddSpeed(facingDirection * -playerMovement.BoostSpeed() * 0.03f);
-    }
-
-    public bool IsBoosting()
-    {
-        return isBoosting;
-    }
-
-    public void SetBoostEnabled(bool value)
-    {
-        boostEnabled = value;
     }
 
     public bool CanShoot()
@@ -83,16 +90,18 @@ public class PlayerMain : MonoBehaviour
         return canShoot;
     }
 
-    public void AddFuelUnit()
+    public void AddEnergyUnits(int numberOfUnits)
     {
-        fuelUnits++;
+        energyUnits += Math.Abs(numberOfUnits);
     }
 
-    public void ConsumeFuelUnit()
+    public void ConsumeEnergyUnits(int numberOfUnits)
     {
-        if (fuelUnits == 0) return;
-        
-        fuelUnits--;
+        if (energyUnits == 0) return;
+
+        energyUnits -= numberOfUnits;
+
+        if (energyUnits < 0) energyUnits = 0;
     }
 
     public bool IsInOrbit()
@@ -108,15 +117,19 @@ public class PlayerMain : MonoBehaviour
     #endregion
     void Start()
     {
-        body = GetComponent<Rigidbody2D>();
+        _body = GetComponent<Rigidbody2D>();
 
-        playerMovement = GetComponent<PlayerMovement>();
+        _playerMovement = GetComponent<PlayerMovement>();
 
         playerBlaster = GetComponent<ShootingComponent>();
+
+        cameraAnimator = Camera.main.GetComponent<CameraAnimatorControl>();
     }
     
     void Update()
     {
-        boostEnabled = (fuelUnits > 0) && isInOrbit == false;
+        boostEnabled = /*isInDarkArea == false &&*/ isInOrbit == false;
+
+        canShoot = energyUnits > 0;
     }
 }

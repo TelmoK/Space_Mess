@@ -14,11 +14,6 @@ public class PlayerCollisionManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.GetComponent<FuelUnitBehaviour>() != null)
-        {
-            playerMain.AddFuelUnit();
-        }
-
         if(collision.gameObject.GetComponent<GravitationalField>() != null)
         {
         //    playerMain.SetBoostEnabled(false);

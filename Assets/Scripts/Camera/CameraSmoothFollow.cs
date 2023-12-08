@@ -16,8 +16,18 @@ public class CameraSmoothFollow : MonoBehaviour
 
     #endregion
 
+    #region references
+
+    private Transform _myTransform;
+
+    #endregion
+
     #region properties
-    
+
+    Vector3 offset;
+
+    private Vector3 velocity = Vector3.zero;
+
     public float SmoothnessFactor
     {
         get { return smoothnessFactor; }
@@ -32,20 +42,6 @@ public class CameraSmoothFollow : MonoBehaviour
 
     #endregion
 
-    #region references
-
-    private Transform _myTransform;
-
-    #endregion
-
-    #region properties
-
-    Vector3 offset;
-
-    private Vector3 velocity = Vector3.zero;
-
-    #endregion
-
     void Start()
     {
         _myTransform = transform;
@@ -54,7 +50,7 @@ public class CameraSmoothFollow : MonoBehaviour
 
         offset = new Vector3(0, 0, _myTransform.position.z);
     }
-    public bool R = true;
+    
     void Update()
     {
         Vector3 targetPosition = targetTranform.position + offset;

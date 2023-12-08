@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 3005956904346035591}
   - component: {fileID: 615080371809907906}
   - component: {fileID: 6375398675638045088}
+  - component: {fileID: 9133136242634656237}
   m_Layer: 0
   m_Name: Black Hole
   m_TagString: Untagged
@@ -222,3 +223,15 @@ MonoBehaviour:
   mcuOrbitalEntranceAngleMargin: 5
   gravityIncreaseIndex: 0.001
   initialLinearSpeed: 10
+--- !u!114 &9133136242634656237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8078454607240633974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70a2231833aa0b54b83e412b3bbc67ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

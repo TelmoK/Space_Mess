@@ -22,6 +22,8 @@ public class CameraArea : MonoBehaviour
 
     private CameraSmoothFollow cameraFollow;
 
+    private CameraSizer cameraSizer;
+
     #endregion
 
     #region properties
@@ -47,6 +49,8 @@ public class CameraArea : MonoBehaviour
     void Start()
     {
         cameraFollow = camera.gameObject.GetComponent<CameraSmoothFollow>();
+
+        cameraSizer = camera.gameObject.GetComponent<CameraSizer>();
     }
 
     void Update()
@@ -56,18 +60,7 @@ public class CameraArea : MonoBehaviour
             if (localCameraSmoothness != -1) cameraFollow.SmoothnessFactor = localCameraSmoothness;
             else cameraFollow.SmoothnessFactor = cameraFollow.DefaultSmoothnessFactor;
 
-            float scaleTimeIndex = Math.Abs(cameraSize - camera.orthographicSize) * 0.005f;
-
-            if(cameraSize - camera.orthographicSize < 0)
-            {
-                camera.orthographicSize -= scaleTimeIndex;
-                if(cameraSize - camera.orthographicSize >= 0) camera.orthographicSize = cameraSize;
-            }
-            else
-            {
-                camera.orthographicSize += scaleTimeIndex;
-                if (cameraSize - camera.orthographicSize <= 0) camera.orthographicSize = cameraSize;
-            }
+            cameraSizer.SetCameraTargetSize(cameraSize);
         }
     }
 }

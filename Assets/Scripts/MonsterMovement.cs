@@ -11,6 +11,7 @@ public class MonsterMovement : MonoBehaviour
 
     [SerializeField]
     private float minSpeed = 3;
+
     Transform playerT;
     Rigidbody2D body;
     #endregion

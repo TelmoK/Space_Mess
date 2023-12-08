@@ -27,6 +27,13 @@ public class GravitationalField : MonoBehaviour
 
     private CircleCollider2D gravityFieldArea;
 
+    private PlayerMain player;
+
+    public PlayerMain playerContained
+    {
+        get { return player; }
+    }
+
     #endregion
 
     #region properties
@@ -35,17 +42,31 @@ public class GravitationalField : MonoBehaviour
 
     private bool playerHasAlreadyOrbited = false;
 
+    private Vector2 _orbitalEntranceDistanceVector;
+
+    public Vector2 orbitalEntranceDistanceVector
+    {
+        get { return _orbitalEntranceDistanceVector; }
+    }
+
+    private Vector2 distanceVec;
+
+    public Vector2 distanceVector
+    {
+        get { return distanceVec; }
+    }
+
     #endregion
 
     #region methods
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        PlayerMain player = collision.gameObject.GetComponent<PlayerMain>();
+        player = collision.gameObject.GetComponent<PlayerMain>();
 
         if (player == null) return;
 
-        Vector2 distanceVec = player.body.transform.position - _myTransfrom.position;
+        distanceVec = player.body.transform.position - _myTransfrom.position;
 
         // Enters in orbit when movement is more or less tangent
         float angleOfDistanceAndMovement = (float)Math.Acos(Math.Abs(Vector2.Dot(player.body.velocity.normalized, distanceVec.normalized))) / (float)Math.PI * 180;
@@ -54,6 +75,8 @@ public class GravitationalField : MonoBehaviour
         {
             player.SetIsInOrbit(true);
             playerHasAlreadyOrbited = true;
+
+            _orbitalEntranceDistanceVector = distanceVec;
         }
 
         if (player.IsInOrbit())
@@ -77,10 +100,13 @@ public class GravitationalField : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerMain>() == null) return;
 
+        player = null;
         gravityIncreaseCount = 0.002f;
         initialLinearSpeed = -1;
 
         playerHasAlreadyOrbited = false;
+
+        _orbitalEntranceDistanceVector = Vector2.zero;
     }
 
     #endregion

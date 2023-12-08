@@ -47,8 +47,6 @@ public class PlayerMovement : MonoBehaviour
         {
             speed += movementDirection.normalized * boostSpeed * 1.5f;
         }
-
-        playerMain.ConsumeFuelUnit();
     }
 
     public void SetSpeed(Vector2 _speed)
