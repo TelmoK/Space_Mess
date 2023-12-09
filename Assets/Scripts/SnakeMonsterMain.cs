@@ -58,14 +58,12 @@ public class SnakeMonsterMain : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("CREATED");
         _myTransform = transform;
 
         body = GetComponent<Rigidbody2D>();
 
         if (tailLeghtAtCurrentPoint > 0)
         {
-            Debug.Log("Instance");
             AddSnakeMonsterNode();
         }
     }

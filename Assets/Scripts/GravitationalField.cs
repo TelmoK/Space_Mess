@@ -29,7 +29,7 @@ public class GravitationalField : MonoBehaviour
 
     private PlayerMain player;
 
-    public PlayerMain playerContained
+    public PlayerMain playerContained //TODO LAYER PLAYER
     {
         get { return player; }
     }

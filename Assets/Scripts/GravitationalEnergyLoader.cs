@@ -29,17 +29,17 @@ public class GravitationalEnergyLoader : MonoBehaviour
 
     void Update()
     {
-        if(gravityField.orbitalEntranceDistanceVector != Vector2.zero)
+        if(gravityField.orbitalEntranceDistanceVector != Vector2.zero && gravityField.playerContained != null)
         {
             Vector2 beginDistDir = gravityField.orbitalEntranceDistanceVector.normalized;
             Vector2 currentDistDir = gravityField.distanceVector.normalized;
 
             float angleOfCurrentAndBeginDistVec = (float)Math.Acos(Math.Abs(Vector2.Dot(beginDistDir, currentDistDir))) / (float)Math.PI * 180;
-
-            if(angleOfCurrentAndBeginDistVec <= 5)
+            
+            if (angleOfCurrentAndBeginDistVec <= 5)
             {
                 gravityField.playerContained.AddEnergyUnits(1);
-             //   Debug.Log("YEAR");
+                Debug.Log("YEAR");
             }
         }
     }
