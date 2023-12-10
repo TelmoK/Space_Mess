@@ -32,7 +32,7 @@ public class ChasePlayerMovement : MonoBehaviour
 
     private List<Vector2> lastPlayerPositions = new List<Vector2>();
 
-    private const int MAX_PREVIOUS_PLAYER_POSITIONS = 20;
+    private const int MAX_PREVIOUS_PLAYER_POSITIONS = 30;
 
     private Vector2 movementDirection = new Vector2();
 
@@ -58,7 +58,7 @@ public class ChasePlayerMovement : MonoBehaviour
         
         Vector2 movement = Vector2.zero;
 
-        if (distToPlayer.magnitude < 25)
+        if (distToPlayer.magnitude < 60)
         {
             movement = distToPlayer;
             if (movement.magnitude > maxSpeed) movement = movement.normalized * maxSpeed;
@@ -85,6 +85,8 @@ public class ChasePlayerMovement : MonoBehaviour
         
         if(directRayToPlayer.collider.gameObject.GetComponent<PlayerMain>() != null)
         {
+            Debug.Log("CHASING");
+            GetComponent<SpriteRenderer>().color = new Color(255, 61, 65);
             movementDirection = (playerTransform.position - _myTransform.position).normalized;
 
             pathPositions.Clear();
@@ -93,10 +95,12 @@ public class ChasePlayerMovement : MonoBehaviour
         }
         else
         {
+            GetComponent<SpriteRenderer>().color = new Color(0, 0, 255);
             if (pathPositions.Count == 0) pathPositions.Add(GetPreviousPlayerPosition());
 
             RaycastHit2D pointRayToPlayer = Physics2D.Raycast(pathPositions[^1], (Vector2)playerTransform.position - pathPositions[^1]);
 
+            Debug.Log("SEARCHING " + pointRayToPlayer.collider.gameObject.name);
             if (pointRayToPlayer.collider.gameObject.GetComponent<PlayerMain>() == null)
             {
                 pathPositions.Add(GetPreviousPlayerPosition());
@@ -105,7 +109,7 @@ public class ChasePlayerMovement : MonoBehaviour
             movementDirection = (pathPositions[0] - (Vector2)_myTransform.position).normalized;
             body.velocity = movementDirection * maxSpeed;
         }
-
+        Debug.Log("paths: " + pathPositions.Count);
         if (pathPositions.Count > 0 && (pathPositions[0] - (Vector2)_myTransform.position).magnitude < 1) pathPositions.RemoveAt(0);
 
         AddPlayerPreviousPosition();
