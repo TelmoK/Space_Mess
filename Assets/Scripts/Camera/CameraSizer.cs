@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class CameraSizer : MonoBehaviour
 {
+    #region parameters
+
+    [SerializeField]
+    private float resizeFactor = 0.015f;
+    
+    #endregion
+
     #region properties
 
     private float cameraTargetSize = 10;
@@ -31,18 +38,18 @@ public class CameraSizer : MonoBehaviour
         camera = GetComponent<Camera>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        float scaleTimeIndex = Math.Abs(cameraTargetSize - camera.orthographicSize) * 0.005f;
+        //float scaleTimeIndex = Math.Abs(cameraTargetSize - camera.orthographicSize) * 0.009f;
 
         if (cameraTargetSize - camera.orthographicSize < 0)
         {
-            camera.orthographicSize -= scaleTimeIndex;
+            camera.orthographicSize *= 1 - resizeFactor;//camera.orthographicSize -= scaleTimeIndex;
             if (cameraTargetSize - camera.orthographicSize >= 0) camera.orthographicSize = cameraTargetSize;
         }
         else
         {
-            camera.orthographicSize += scaleTimeIndex;
+            camera.orthographicSize *= 1 + resizeFactor;//camera.orthographicSize += scaleTimeIndex;
             if (cameraTargetSize - camera.orthographicSize <= 0) camera.orthographicSize = cameraTargetSize;
         }
     }

@@ -15,7 +15,7 @@ public class PlayerMain : MonoBehaviour
     #region references
 
     [HideInInspector]
-    public Rigidbody2D _body;
+    private Rigidbody2D _body;
 
     [HideInInspector]
     public PlayerMovement _playerMovement;
@@ -85,11 +85,6 @@ public class PlayerMain : MonoBehaviour
         playerMovement.AddSpeed(facingDirection * -playerMovement.BoostSpeed() * 0.03f);
     }
 
-    public bool CanShoot()
-    {
-        return canShoot;
-    }
-
     public void AddEnergyUnits(int numberOfUnits)
     {
         energyUnits += Math.Abs(numberOfUnits);
@@ -117,6 +112,7 @@ public class PlayerMain : MonoBehaviour
     #endregion
     void Start()
     {
+
         _body = GetComponent<Rigidbody2D>();
 
         _playerMovement = GetComponent<PlayerMovement>();

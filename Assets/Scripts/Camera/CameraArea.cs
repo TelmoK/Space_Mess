@@ -51,6 +51,8 @@ public class CameraArea : MonoBehaviour
         cameraFollow = camera.gameObject.GetComponent<CameraSmoothFollow>();
 
         cameraSizer = camera.gameObject.GetComponent<CameraSizer>();
+
+        //camera = Camera.main;
     }
 
     void Update()
