@@ -6,6 +6,7 @@ public class ProyectileMovement : MonoBehaviour
 {
     #region parameters
 
+    [SerializeField]
     private float proyectileSpeed = 30f;
 
     #endregion

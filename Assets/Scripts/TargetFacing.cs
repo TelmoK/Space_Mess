@@ -11,7 +11,7 @@ public class TargetFacing : MonoBehaviour
 
     private Transform _myTransfrom;
 
-    private Vector2 targetPosition = Vector2.zero;
+    private Vector2 targetPosition = Vector2.right;
 
     #endregion
 
@@ -32,12 +32,12 @@ public class TargetFacing : MonoBehaviour
     
     void Update()
     {
-        Quaternion rotation = Quaternion.LookRotation(targetPosition - (Vector2)transform.position, transform.TransformDirection(Vector3.up));
+        Quaternion rotation = Quaternion.LookRotation(targetPosition - (Vector2)transform.position, _myTransfrom.TransformDirection(Vector3.up));
 
         Quaternion targetRotation = new Quaternion(0, 0, rotation.z, rotation.w);
 
-        transform.rotation = Quaternion.Slerp(_myTransfrom.rotation, targetRotation, 0.1f);
-
+        _myTransfrom.rotation = Quaternion.Slerp(_myTransfrom.rotation, targetRotation, 0.1f);
+        
 
     }
 }
