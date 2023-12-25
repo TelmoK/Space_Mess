@@ -15,7 +15,7 @@ public class BombMonsterMain : MonoBehaviour
 
     #region references
 
-    private Transform _myTranform;
+    private Transform _myTransform;
 
     private TargetTracker movement;
 
@@ -30,6 +30,8 @@ public class BombMonsterMain : MonoBehaviour
     #region properties
 
     private bool targetReached = false;
+
+    private bool playerDetected = false;
 
     #endregion
 
@@ -53,7 +55,7 @@ public class BombMonsterMain : MonoBehaviour
 
     void Start()
     {
-        _myTranform = transform;
+        _myTransform = transform;
 
         movement = GetComponent<TargetTracker>();
 
@@ -66,10 +68,21 @@ public class BombMonsterMain : MonoBehaviour
 
     void Update()
     {
-        if((playerRef.transform.position - _myTranform.position).magnitude <= targetReachRadius && !targetReached)
+        if(playerDetected == false)
+        {
+            RaycastHit2D rayToPlayer = Physics2D.Raycast(_myTransform.position, playerRef.transform.position - _myTransform.position);
+            playerDetected = rayToPlayer.collider.gameObject.GetComponent<PlayerMain>() != null;
+        }
+
+        if (playerDetected) // Set player as target
+        {
+            movement.targetTimeTransform = playerRef.GetComponent<TimeTrackedTransform>();
+        }
+
+        if ((playerRef.transform.position - _myTransform.position).magnitude <= targetReachRadius && !targetReached)
         {
             targetReached = true;
             Explode();
-        } 
+        }
     }
 }

@@ -18,7 +18,7 @@ public class TargetTracker : MonoBehaviour
     #region references
 
     [SerializeField]
-    private TimeTrackedTransform targetTimeTransform;
+    public TimeTrackedTransform targetTimeTransform;
 
     private Transform _myTransform;
 
@@ -106,6 +106,7 @@ public class TargetTracker : MonoBehaviour
 
             if (pathPositions.Count == 0) pathPositions.Add(targetTimeTransform.GetPreviousPosition(60));
 
+            //Last point of the path follows de target with a ray
             RaycastHit2D pointRayToPlayer = Physics2D.Raycast(pathPositions[^1], (Vector2)targetTimeTransform.position - pathPositions[^1]);
 
             if (pointRayToPlayer.collider.gameObject.GetComponent<PlayerMain>() == null)

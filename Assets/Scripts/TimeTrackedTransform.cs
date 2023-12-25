@@ -35,6 +35,7 @@ public class TimeTrackedTransform : MonoBehaviour
     public Vector3 GetPreviousPosition(int index)
     {
         if (index >= lastGameObjectPositions.Count) index = lastGameObjectPositions.Count - 1;
+        if (index < 0) index = 0;
 
         return lastGameObjectPositions[index];
     }

@@ -8,18 +8,28 @@ public class EyeKrakenMain : MonoBehaviour
 
     private Transform _myTransform;
 
-    private PlayerMain playerRef;
-
-    private TargetFacing pointFacer;
-
     private Rigidbody2D body;
 
     private Animator animator;
 
+    private SpriteRenderer sprRenderer;
+
+    private TargetTracker chaseMovement;
+
+    private PlayerMain playerRef;
+
+    private TargetFacing pointFacer;
+
+    #endregion
+
+    #region properties
+
+    private bool playerDetected = false;
+
     #endregion
 
     #region methods
-    
+
     private void ManageAttack()
     {
         Vector2 distanceToPlayer = playerRef.transform.position - _myTransform.position;
@@ -32,6 +42,20 @@ public class EyeKrakenMain : MonoBehaviour
         else
         {
             animator.SetInteger("AnimState", 0);
+        }
+    }
+
+    private void ManageMovement()
+    {
+        if (playerDetected == false)
+        {
+            RaycastHit2D rayToPlayer = Physics2D.Raycast(_myTransform.position, playerRef.transform.position - _myTransform.position);
+            playerDetected = rayToPlayer.collider.gameObject.GetComponent<PlayerMain>() != null;
+        }
+        
+        if (playerDetected && sprRenderer.isVisible) // Set player as target
+        {
+            chaseMovement.targetTimeTransform = playerRef.GetComponent<TimeTrackedTransform>();
         }
     }
     
@@ -48,11 +72,17 @@ public class EyeKrakenMain : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
 
         animator = GetComponent<Animator>();
+
+        sprRenderer = GetComponent<SpriteRenderer>();
+
+        chaseMovement = GetComponent<TargetTracker>();
     }
 
     void Update()
     {
-        pointFacer.SetTargetPosition((Vector2)_myTransform.position + body.velocity);
+        pointFacer.SetTargetPosition((Vector2)_myTransform.position + body.velocity.normalized);
+
+        ManageMovement();
 
         ManageAttack();
     }

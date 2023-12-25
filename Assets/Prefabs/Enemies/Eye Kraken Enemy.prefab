@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4334542142188650355}
   - component: {fileID: 5992900990686667909}
   - component: {fileID: 8360194106153572410}
+  - component: {fileID: 8354438349207670198}
   m_Layer: 7
   m_Name: Eye Kraken Enemy
   m_TagString: Untagged
@@ -238,6 +239,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifePoints: 4
+--- !u!114 &8354438349207670198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354115379989125352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809e8956e92b4ec4d9e90c92d700ffe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autostart: 0
+  restart: 0
+  time: 12
+  onTimeout:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3140075890744489158
 GameObject:
   m_ObjectHideFlags: 0

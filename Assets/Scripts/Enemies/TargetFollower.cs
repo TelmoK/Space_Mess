@@ -17,7 +17,7 @@ public class TargetFollower : MonoBehaviour
     #region references
 
     [SerializeField]
-    private Transform targetTransform;
+    public Transform targetTransform;
 
     private Rigidbody2D body;
 

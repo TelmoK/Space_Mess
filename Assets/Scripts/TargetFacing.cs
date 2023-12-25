@@ -9,7 +9,7 @@ public class TargetFacing : MonoBehaviour
 {
     #region references
 
-    private Transform _myTransfrom;
+    private Transform _myTransform;
 
     private Vector2 targetPosition = Vector2.right;
 
@@ -26,18 +26,18 @@ public class TargetFacing : MonoBehaviour
 
     void Start()
     {
-        _myTransfrom = transform;
+        _myTransform = transform;
     }
 
     
     void Update()
     {
-        Quaternion rotation = Quaternion.LookRotation(targetPosition - (Vector2)transform.position, _myTransfrom.TransformDirection(Vector3.up));
+        Vector2 direction = targetPosition - (Vector2)_myTransform.position;
 
-        Quaternion targetRotation = new Quaternion(0, 0, rotation.z, rotation.w);
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        _myTransfrom.rotation = Quaternion.Slerp(_myTransfrom.rotation, targetRotation, 0.1f);
-        
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
+        _myTransform.rotation = Quaternion.Slerp(_myTransform.rotation, rotation, 5f * Time.deltaTime);
     }
 }
