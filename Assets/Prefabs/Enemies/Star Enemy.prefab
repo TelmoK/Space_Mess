@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 8641326478204715488}
   - component: {fileID: 1716393913455917912}
   - component: {fileID: 5912936495739467736}
+  - component: {fileID: 2756777346104848227}
   - component: {fileID: 7654108050977367310}
+  - component: {fileID: 2270170262287288884}
   - component: {fileID: 4801825473536279989}
   - component: {fileID: 3714603549007765956}
   m_Layer: 7
@@ -30,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 6778592988149575358}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -37.42, y: 249.11, z: -0.09525807}
+  m_LocalPosition: {x: -37.44053, y: 249.39215, z: -0.09525807}
   m_LocalScale: {x: 0.85, y: 0.85, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -115,6 +117,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &2756777346104848227
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6778592988149575358}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7e5aaedbf07b9a141915842763d01463, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &7654108050977367310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,9 +150,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85218a80e1fc2794c8d177b94d0712d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfShootedProyectiles: 15
-  firstShootAngle: 0
-  shootFrecuencePerSecond: 0.5
+  numberOfShootedProyectiles: 11
+  shootFrecuencePerSecond: 0.8
+  maxShootDistance: 15
+--- !u!114 &2270170262287288884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6778592988149575358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1df77993050083142825b98017d3a59b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 6
+  minSpeed: 6
+  targetTransform: {fileID: 0}
 --- !u!114 &4801825473536279989
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,10 +11,10 @@ public class StarMonsterMain : MonoBehaviour
     private int numberOfShootedProyectiles = 7;
 
     [SerializeField]
-    private float firstShootAngle = 0;
+    private float shootFrecuencePerSecond = 2;
 
     [SerializeField]
-    private float shootFrecuencePerSecond = 2;
+    private float maxShootDistance = 10;
 
     #endregion
 
@@ -22,7 +22,11 @@ public class StarMonsterMain : MonoBehaviour
 
     private Transform _myTransform;
 
+    private Rigidbody2D body;
+
     private ShootingComponent shooter;
+
+    private TargetFollower movement;
 
     private Timer shootingTimer;
 
@@ -32,10 +36,18 @@ public class StarMonsterMain : MonoBehaviour
 
     #endregion
 
+    #region properties
+
+    private float firstShootAngle = 0;
+
+    #endregion
+
     #region methods
-    
+
     public void Shoot()
     {
+        firstShootAngle = GetAngleToPlayer();
+
         float anglePiece = 360 / numberOfShootedProyectiles;
 
         for (int i = 0; i < numberOfShootedProyectiles; i++)
@@ -48,6 +60,17 @@ public class StarMonsterMain : MonoBehaviour
             shooter.Shoot(direction);
         }
     }
+
+    private float GetAngleToPlayer()
+    {
+        Vector2 dirVecToPlayer = ((Vector2)playerRef.transform.position - (Vector2)_myTransform.position).normalized;
+        
+        float angle = (float)Math.Abs(Math.Acos(Vector2.Dot(Vector2.right, dirVecToPlayer)));
+
+        if (playerRef.transform.position.y < _myTransform.position.y) angle *= -1;
+
+        return angle;
+    }
     
     #endregion
 
@@ -55,9 +78,14 @@ public class StarMonsterMain : MonoBehaviour
     {
         _myTransform = transform;
 
+        body = GetComponent<Rigidbody2D>();
+
         shooter = GetComponent<ShootingComponent>();
 
         playerRef = FindAnyObjectByType<PlayerMain>();
+
+        movement = GetComponent<TargetFollower>();
+        movement.targetTransform = playerRef.transform;
 
         shootingTimer = GetComponent<Timer>();
         shootingTimer.SetTime(1 / shootFrecuencePerSecond);
@@ -65,12 +93,19 @@ public class StarMonsterMain : MonoBehaviour
 
     void Update()
     {
-        RaycastHit2D playerRay = Physics2D.Raycast(_myTransform.position, playerRef.transform.position - _myTransform.position);
+        Vector2 vectorToPlayer = playerRef.transform.position - _myTransform.position;
+
+        RaycastHit2D playerRay = Physics2D.Raycast(_myTransform.position, vectorToPlayer);
 
         bool playerInFront = playerRay.collider != null && playerRay.collider.gameObject.GetComponent<PlayerMain>() != null;
         
+        //Shooting
         shootingTimer.SetRestart(playerInFront);
 
         if (shootingTimer.IsTimerRunning() == false && playerInFront) shootingTimer.TimerStart();
+
+        //Movement
+        movement.enabled = playerInFront && vectorToPlayer.magnitude > maxShootDistance;
+        if (!movement.enabled) body.velocity = Vector2.zero;
     }
 }

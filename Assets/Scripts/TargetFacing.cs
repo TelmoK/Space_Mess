@@ -7,6 +7,13 @@ using UnityEngine;
 
 public class TargetFacing : MonoBehaviour
 {
+    #region parameters
+
+    [SerializeField]
+    private float fowollSpeed = 5;
+    
+    #endregion
+
     #region references
 
     private Transform _myTransform;
@@ -38,6 +45,6 @@ public class TargetFacing : MonoBehaviour
 
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        _myTransform.rotation = Quaternion.Slerp(_myTransform.rotation, rotation, 5f * Time.deltaTime);
+        _myTransform.rotation = Quaternion.Slerp(_myTransform.rotation, rotation, fowollSpeed * Time.deltaTime);
     }
 }
