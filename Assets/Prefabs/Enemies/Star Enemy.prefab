@@ -10,12 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 8641326478204715488}
   - component: {fileID: 1716393913455917912}
+  - component: {fileID: 6059284096352073466}
   - component: {fileID: 5912936495739467736}
   - component: {fileID: 2756777346104848227}
   - component: {fileID: 7654108050977367310}
   - component: {fileID: 2270170262287288884}
   - component: {fileID: 4801825473536279989}
   - component: {fileID: 3714603549007765956}
+  - component: {fileID: 2952207349856431621}
   m_Layer: 7
   m_Name: Star Enemy
   m_TagString: Untagged
@@ -65,6 +67,41 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &6059284096352073466
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6778592988149575358}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.4999999
 --- !u!212 &5912936495739467736
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -211,3 +248,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2952207349856431621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6778592988149575358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0e8afa5c7e256e41a15820504625027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifePoints: 8

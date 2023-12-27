@@ -8,9 +8,6 @@ public class GravitationalField : MonoBehaviour
     #region parameters
 
     [SerializeField]
-    private float gravityFieldRadius = 2.6f;
-
-    [SerializeField]
     private float mcuOrbitalEntranceAngleMargin = 5;
 
     [SerializeField]
@@ -25,11 +22,9 @@ public class GravitationalField : MonoBehaviour
 
     private Transform _myTransfrom;
 
-    private CircleCollider2D gravityFieldArea;
-
     private PlayerMain player;
 
-    public PlayerMain playerContained //TODO LAYER PLAYER
+    public PlayerMain playerContained
     {
         get { return player; }
     }
@@ -65,7 +60,7 @@ public class GravitationalField : MonoBehaviour
         player = collision.gameObject.GetComponent<PlayerMain>();
 
         if (player == null) return;
-
+        
         distanceVec = player.body.transform.position - _myTransfrom.position;
 
         // Enters in orbit when movement is more or less tangent
@@ -81,7 +76,7 @@ public class GravitationalField : MonoBehaviour
 
         if (player.IsInOrbit())
         {
-            if(initialLinearSpeed == -1) initialLinearSpeed = player.body.velocity.magnitude;
+            if (initialLinearSpeed == -1) initialLinearSpeed = player.body.velocity.magnitude;
             player.playerMovement.ScaleSpeed(initialLinearSpeed);
 
             Vector2 g_u = -distanceVec.normalized; // Unitary gravity vector
@@ -114,12 +109,10 @@ public class GravitationalField : MonoBehaviour
     void Start()
     {
         _myTransfrom = transform;
-
-        gravityFieldArea = GetComponent<CircleCollider2D>();
     }
 
     void Update()
     {
-        gravityFieldArea.radius = gravityFieldRadius;
+
     }
 }
